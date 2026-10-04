@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TechOutsource — профессиональный IT-аутсорсинг, сопровождение информационных систем и маркетинг под ключ. Контекстная и таргетированная реклама.">
+    <title>TechOutsource | IT-Аутсорсинг и Маркетинг под ключ</title>
+    <style>
+        /* ===== Переменные и базовые стили ===== */
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --card-bg-light: #111422;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-soft: rgba(59, 130, 246, 0.12);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #1f2937;
+            --border-input: #1e2338;
+            --radius: 10px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            scroll-margin-top: 80px;
+        }
+
+        /* ===== Анимация появления ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Шапка сайта ===== */
+        header {
+            background-color: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 28px;
+            font-size: 16px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Гамбургер-меню */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .burger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--text-main);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* ===== Главный экран ===== */
+        .hero {
+            padding: 190px 0 110px;
+            text-align: center;
+            background: radial-gradient(circle at top, #1e293b 0%, var(--bg-color) 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent-soft);
+            color: var(--accent-color);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 22px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 720px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== Кнопки ===== */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--card-bg);
+            border-color: var(--accent-color);
+            box-shadow: none;
+        }
+
+        /* ===== Заголовки секций ===== */
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 17px;
+            max-width: 640px;
+            margin: 0 auto 55px;
+        }
+
+        /* ===== Услуги ===== */
+        .services {
+            padding: 100px 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: var(--accent-soft);
+            border-radius: 12px;
+        }
+
+        .service-card h3 {
+            font-size: 21px;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 15.5px;
+        }
+
+        /* ===== Преимущества ===== */
+        .advantages {
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--bg-color) 0%, #0d1220 50%, var(--bg-color) 100%);
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+
+        .advantage {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 32px 26px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .advantage:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+        }
+
+        .advantage-number {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .advantage h4 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .advantage p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* ===== Контакты / Форма ===== */
+        .contact {
+            padding: 100px 0;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 16px 18px;
+            background-color: var(--card-bg-light);
+            border: 1px solid var(--border-input);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #4b5563;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form button {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .form-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* ===== Подвал ===== */
+        footer {
+            background-color: #070a12;
+            padding: 50px 0 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 35px;
+        }
+
+        .footer-col h5 {
+            color: var(--text-main);
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+
+        /* ===== Адаптивность ===== */
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 150px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            /* Мобильное меню */
+            .burger {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 320px;
+                height: 100vh;
+                background: #0d1220;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 100px 30px;
+                gap: 10px;
+                transition: right 0.4s ease;
+                border-left: 1px solid var(--border-color);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            nav.open {
+                right: 0;
+            }
+
+            nav a {
+                margin-left: 0;
+                font-size: 19px;
+                padding: 12px 0;
+                width: 100%;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 28px 22px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Шапка сайта ===== -->
+    <header>
+        <div class="container header-wrap">
+            <div class="logo">Tech<span>Outsource</span></div>
+
+            <nav id="mainNav">
+                <a href="#services">Услуги</a>
+                <a href="#advantages">Преимущества</a>
+                <a href="#contact">Контакты</a>
+            </nav>
+
+            <button class="burger" id="burger" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== Главный баннер ===== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">IT-аутсорсинг · Digital-маркетинг</div>
+            <h1>Передайте заботу об IT и маркетинге <span class="accent">экспертам</span></h1>
+            <p>Обеспечим бесперебойное сопровождение информационных систем вашего бизнеса и настроим стабильный поток клиентов из контекстной и таргетированной рекламы. Снизим расходы на штатных специалистов до 50%.</p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn">Получить расчет стоимости</a>
+                <a href="#services" class="btn btn-outline">Наши услуги</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Блок услуг ===== -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title reveal">Наши услуги</h2>
+            <p class="section-subtitle reveal">Комплексные решения для стабильной работы бизнеса и роста продаж</p>
+
+            <div class="services-grid">
+
+                <div class="service-card reveal">
+                    <div class="service-icon">🖥️</div>
+                    <h3>Сопровождение ИС</h3>
+                    <p>Администрирование, своевременное обновление и комплексная техническая поддержка корпоративных информационных систем (CRM, ERP, 1С) для стабильной работы 24/7.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Обслуживание ПК и серверов</h3>
+                    <p>Плановый мониторинг оборудования, настройка ПО, удалённая поддержка сотрудников и оперативный выезд инженера в офис при сбоях.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Информационная безопасность</h3>
+                    <p>Защита коммерческих данных от утечек, настройка резервного копирования (бэкапы), аудит уязвимостей вашей инфраструктуры.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">☁️</div>
+                    <h3>Облачные решения</h3>
+                    <p>Перенос корпоративной почты, 1С и баз данных в надёжные облачные хранилища. Настройка совместной удалённой работы.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">🎯</div>
+                    <h3>Контекстная реклама</h3>
+                    <p>Разработка, запуск и ведение эффективных рекламных кампаний в Яндекс.Директ. Приведём целевых клиентов, готовых к покупке ваших услуг.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">📱</div>
+                    <h3>Таргетированная реклама</h3>
+                    <p>Настройка таргета в ключевых социальных сетях. Точечный подбор вашей целевой аудитории по должностям, интересам, поведению и географии.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Блок преимуществ ===== -->
+    <section id="advantages" class="advantages">
+        <div class="container">
+            <h2 class="section-title reveal">Почему выбирают нас</h2>
+            <p class="section-subtitle reveal">Мы берём на себя рутину, чтобы вы занимались развитием бизнеса</p>
+
+            <div class="advantages-grid">
+
+                <div class="advantage reveal">
+                    <div class="advantage-number">24/7</div>
+                    <h4>Поддержка без выходных</h4>
+                    <p>Дежурный инженер на связи круглосуточно и готов оперативно решить проблему.</p>
+                </div>
+
+                <div class="advantage reveal">
+                    <div class="advantage-number">-50%</div>
+                    <h4>Экономия бюджета</h4>
+                    <p>Аутсорсинг обходится существенно дешевле содержания штатного отдела специалистов.</p>
+                </div>
+
+                <div class="advantage reveal">
+                    <div class="advantage-number">SLA</div>
+                    <h4>Гарантия по договору</h4>
+                    <p>Фиксируем время реакции и решения задач в соглашении об уровне сервиса.</p>
+                </div>
+
+                <div class="advantage reveal">
+                    <div class="advantage-number">360°</div>
+                    <h4>Комплексный подход</h4>
+                    <p>IT-инфраструктура и маркетинг — в одних руках. Единая точка ответственности.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Блок контактов ===== -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title reveal">Оставить заявку</h2>
+            <p class="section-subtitle reveal">Опишите задачу — и наш эксперт свяжется с вами в течение 15 минут</p>
+
+            <form class="contact-form reveal" id="contactForm" novalidate>
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="tel" name="phone" placeholder="Номер телефона" required>
+                </div>
+                <input type="email" name="email" placeholder="Email для связи" required>
+                <input type="text" name="company" placeholder="Название компании (необязательно)">
+                <textarea name="message" rows="5" placeholder="Опишите кратко вашу задачу или количество компьютеров в офисе"></textarea>
+                <button type="submit">Получить консультацию</button>
+                <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== Подвал ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+
+                <div class="footer-col">
+                    <h5>TechOutsource</h5>
+                    <p>Надёжный digital-партнёр для вашего бизнеса. IT-аутсорсинг, сопровождение информационных систем и маркетинг под ключ.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Навигация</h5>
+                    <a href="#services">Услуги</a>
+                    <a href="#advantages">Преимущества</a>
+                    <a href="#contact">Контакты</a>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Контакты</h5>
+                    <a href="tel:+78001234567">+7 (800) 123-45-67</a>
+                    <a href="mailto:info@techoutsource.ru">info@techoutsource.ru</a>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 TechOutsource. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== Скрипты ===== -->
+    <script>
+        // ===== Мобильное меню =====
+        const burger = document.getElementById('burger');
+        const nav = document.getElementById('mainNav');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            nav.classList.toggle('open');
+        });
+
+        // Закрытие меню при клике по ссылке
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                nav.classList.remove('open');
+            });
+        });
+
+        // ===== Анимация появления блоков при скролле =====
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== Обработка формы =====
+        const form = document.getElementById('contactForm');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = form.name.value.trim();
+            const phone = form.phone.value.trim();
+            const email = form.email.value.trim();
+
+            if (!name || !phone || !email) {
+                alert('Пожалуйста, заполните обязательные поля: имя, телефон и email.');
+                return;
+            }
+
+            // Простая проверка телефона
+            const phoneDigits = phone.replace(/\D/g, '');
+            if (phoneDigits.length < 10) {
+                alert('Пожалуйста, введите корректный номер телефона.');
+                return;
+            }
+
+            // Простая проверка email
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Пожалуйста, введите корректный email.');
+                return;
+            }
+
+            alert('Спасибо, ' + name + '! Ваша заявка принята. Наш эксперт свяжется с вами в ближайшее время.');
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>
